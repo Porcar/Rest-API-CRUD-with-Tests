@@ -14,6 +14,7 @@ class CreateApartmentCategoriesTable extends Migration
     public function up()
     {
         Schema::create('apartment_categories', function (Blueprint $table) {
+            
             $table->string('ext_id');
             $table->string('title');
             $table->string('description');

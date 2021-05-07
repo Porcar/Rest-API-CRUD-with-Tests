@@ -15,11 +15,11 @@ class CreateApartmentsTable extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
-            $table->string('ext_id');
+            $table->string('ext_id')->nullable();
             $table->string('name');
             $table->string('description');
             $table->integer('quantity');
-            $table->integer('active');              
+            $table->integer('active')->default('0')->nullable();              
             $table->timestamps();       
             $table->timestamp('deleted_at')->nullable();
         });

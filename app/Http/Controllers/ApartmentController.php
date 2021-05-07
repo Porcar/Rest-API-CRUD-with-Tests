@@ -15,7 +15,7 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::latest()->paginate(5);
-        return view('index',compact('apartments'))
+        return view('apartment.index',compact('apartments'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -37,7 +37,16 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $storeData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'quantity' => 'required|numeric',
+            'active' => 'required|numeric'
+        ]);
+
+        $apartment = Apartment::create($storeData);
+         
+        return redirect('/apartment')->with('completed', 'A new apartment has been saved!');
     }
 
     /**
@@ -59,7 +68,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        return view('apartment.edit',compact('apartment'));
     }
 
     /**
@@ -71,7 +80,15 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        //
+         //validation
+         $request->validate([
+            'name' =>'required|min:4|string|max:255',
+            'email'=>'required|email|string|max:255'
+        ]);
+
+        $user->update($request->all());
+
+        return redirect()->route('home')->with('success','User updated successfully');
     }
 
     /**

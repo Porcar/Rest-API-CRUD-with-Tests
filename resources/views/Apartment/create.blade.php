@@ -41,13 +41,11 @@
               <input type="number" class="form-control" name="quantity"/>
           </div>
           <div class="form-group">
-              <label for="active">Active</label>
-              <div>
-              <label for="active">Yes</label>
-              <input type="radio" class="form-control" name="active" value="1"/>
-              <label for="active">No</label>
-              <input type="radio" class="form-control" name="active" value="0"/>
-              </div>
+            <label for="active">Active</label>
+            <div>
+              <input type="radio" name="active" id="active" value= 1> Yes
+              <input type="radio" name="active" id="active" value= 0> No
+            </div>
           </div>
           <button type="submit" class="btn btn-block btn-danger">Create New</button>
       </form>

@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //Display a list of the apartments
     public function index()
     {
         $apartments = Apartment::latest()->paginate(5);
@@ -19,29 +15,20 @@ class ApartmentController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Show the form for creating a new apartment.
     public function create()
     {
         return view('apartment.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    //Store a newly created apartment in storage.
     public function store(Request $request)
     {
         $storeData = $request->validate([
             'name' => 'required|max:255',
             'description' => 'required|max:255',
-            'quantity' => 'required|numeric',
-            'active' => 'required|numeric'
+            'quantity' => 'required|integer',
+            'active' => 'required|integer'
         ]);
 
         $apartment = Apartment::create($storeData);
@@ -49,56 +36,35 @@ class ApartmentController extends Controller
         return redirect('/apartment')->with('completed', 'A new apartment has been saved!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Apartment $apartment)
+    // Show the form for editing the apartment.
+    public function edit($ext_id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Apartment $apartment)
-    {
+        $apartment = Apartment::findOrFail($ext_id);        
         return view('apartment.edit',compact('apartment'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Apartment $apartment)
+    //Update Apartment
+    public function update(Request $request, $ext_id)
     {
          //validation
-         $request->validate([
-            'name' =>'required|min:4|string|max:255',
-            'email'=>'required|email|string|max:255'
+         $updateData = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'quantity' => 'required|integer',
+            'active' => 'required|integer'
         ]);
 
-        $user->update($request->all());
+        Apartment::where('ext_id',$ext_id)->update($updateData);
 
-        return redirect()->route('home')->with('success','User updated successfully');
+        return redirect('/apartment')->with('success','Apartment updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Apartment  $apartment
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Apartment $apartment)
+    //Delete Apartment
+    public function destroy($ext_id)
     {
-        //
+        $apartment = Apartment::findOrFail($ext_id);
+        $apartment->delete();
+
+        return redirect('/apartment')->with('success', 'Apartment has been deleted');
     }
 }

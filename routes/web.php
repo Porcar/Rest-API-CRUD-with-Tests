@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::resource('apartment','App\Http\Controllers\ApartmentController');
-
+Route::resource('category','App\Http\Controllers\ApartmentCategoryController');
 

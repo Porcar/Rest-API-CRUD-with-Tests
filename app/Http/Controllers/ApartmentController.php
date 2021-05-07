@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Apartment;
+use App\Http\Resources\ApartmentResource;
 use Illuminate\Http\Request;
 
 class ApartmentController extends Controller
@@ -11,6 +12,10 @@ class ApartmentController extends Controller
     public function index()
     {
         $apartments = Apartment::latest()->paginate(5);
+
+
+        //return response([ 'apartments' => ApartmentResource::collection($apartments), 'message' => 'Retrieved successfully'], 200);
+
         return view('apartment.index',compact('apartments'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }

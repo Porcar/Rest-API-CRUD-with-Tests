@@ -14,3 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::apiResource('apartment','App\Http\Controllers\ApartmentController');

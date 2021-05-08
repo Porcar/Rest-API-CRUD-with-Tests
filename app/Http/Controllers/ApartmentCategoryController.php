@@ -11,10 +11,7 @@ class ApartmentCategoryController extends Controller
     public function index()
     {
         $categories = ApartmentCategory::latest()->paginate(5);
-
-
-        //return response([ 'apartments' => ApartmentResource::collection($apartments), 'message' => 'Retrieved successfully'], 200);
-
+        
         return view('category.index',compact('categories'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }

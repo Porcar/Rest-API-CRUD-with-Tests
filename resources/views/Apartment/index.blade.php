@@ -43,9 +43,9 @@
                                 <td>{{ $apartment->created_at }}</td>
                                 <td>{{ $apartment->deleted_at }}</td>
                                 <td>
-                                    <form action="{{ route('apartment.destroy',$apartment->id) }}" method="POST">
+                                    <form action="{{ route('apartment.destroy',$apartment->ext_id) }}" method="POST">
                                                                             
-                                        <a class="btn btn-primary" href="{{ route('apartment.edit',$apartment->id) }}">Edit</a>
+                                        <a class="btn btn-primary" href="{{ route('apartment.edit',$apartment->ext_id) }}">Edit</a>
                     
                                         @csrf
                                         @method('DELETE')

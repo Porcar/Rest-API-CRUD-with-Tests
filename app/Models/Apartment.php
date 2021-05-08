@@ -9,8 +9,12 @@ class Apartment extends Model
 {
     use HasFactory;   
 
-    protected $fillable = [
-        'ext_id',
+    protected $primaryKey = 'ext_id';
+    protected $keyType = 'string';
+    public $incrementing = false;
+
+    protected $fillable = [ 
+        'ext_id',             
         'name',
         'description',
         'quantity',
@@ -19,6 +23,7 @@ class Apartment extends Model
     ];
 
     //Assign the AP- id with autoincrements.
+    /*
     public static function boot()
     {
         parent::boot();
@@ -28,4 +33,5 @@ class Apartment extends Model
             $apartment->save();
         });
     }
+    */
 }

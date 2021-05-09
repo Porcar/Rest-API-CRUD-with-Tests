@@ -22,10 +22,12 @@
 - $cp .env.example .env
 - Edit .env file according to your database: DB_DATABASE=XXXX
 - create a DB named: "XXXX"
+- create another DB named: "testing_DB"
 - php artisan migrate
-- //If you want to create 50 dummy data do the following:
+- //If you want to create 100 dummy data do the following:
 - php artisan db:seed 
-
+- All the REST API calls are to: \apartment and \category
+- Have fun.
 
 ## License
 

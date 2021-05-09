@@ -23,7 +23,7 @@
 - Edit .env file according to your database: DB_DATABASE=XXXX
 - create a DB named: "XXXX"
 - php artisan migrate
-- //If you want to create dummy data do the following:
+- //If you want to create 50 dummy data do the following:
 - php artisan db:seed 
 
 

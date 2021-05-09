@@ -7,22 +7,18 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ApartmentFactory extends Factory
 {
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
+
     protected $model = Apartment::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+    //factory to seed the DB
     public function definition()
     {
+        
         return [
-            //
+            'name' => $this->faker->name(),
+            'description' => $this->faker->text($maxNbChars = 249),
+            'quantity' => $this->faker->numberBetween(0,100),
+            'active' => $this->faker->numberBetween(0, 1),
         ];
     }
 }

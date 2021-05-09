@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Resources\ApartmentResource;
 use App\Models\Apartment;
-use App\Http\Controllers\ApartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +16,4 @@ use App\Http\Controllers\ApartmentController;
 */
 
 Route::apiResource('apartment','App\Http\Controllers\ApartmentController');
-Route::get('/apartment', function(){
-    return new ApartmentResource(Apartment::paginate(10));
-});
+//Route::apiResource('apartment','App\Http\Controllers\ApartmentController');

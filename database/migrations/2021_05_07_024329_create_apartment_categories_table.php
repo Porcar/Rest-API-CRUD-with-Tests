@@ -19,6 +19,7 @@ class CreateApartmentCategoriesTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->primary('ext_id');
         });

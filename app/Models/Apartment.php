@@ -4,17 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Apartment extends Model
 {
-    use HasFactory;   
+    use HasFactory;
+    use SoftDeletes;
 
+    //Set the primary key in the table to "ext_id"
     protected $primaryKey = 'ext_id';
     protected $keyType = 'string';
     public $incrementing = false;
 
-    protected $fillable = [ 
-        'ext_id',             
+    protected $fillable = [           
         'name',
         'description',
         'quantity',
@@ -22,16 +24,13 @@ class Apartment extends Model
         'deleted_at'       
     ];
 
-    //Assign the AP- id with autoincrements.
-    /*
+    //This will make the "id" field in the table autoincrement and assign that value to the AP- primary key.
     public static function boot()
     {
         parent::boot();
-
-        static::created(function($apartment) {
-            $apartment->ext_id = 'AP-' . $apartment->id;
-            $apartment->save();
+        self::creating(function ($apartment) {            
+            $apartment->id = $apartment->max('id') + 1;           
+            $apartment->ext_id = 'AP-' . $apartment->id;            
         });
     }
-    */
 }

@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('apartment','App\Http\Controllers\ApartmentController');
-Route::resource('category','App\Http\Controllers\ApartmentCategoryController');
+//Those routes are for the WEB views. NOT used in this version.
+//Route::resource('apartment','App\Http\Controllers\ApartmentController');
+//Route::resource('category','App\Http\Controllers\ApartmentCategoryController');
 

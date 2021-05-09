@@ -12,19 +12,10 @@ class ApartmentController extends Controller
     //Display a list of the apartments
     public function index()
     {
-        $apartments = Apartment::latest()->paginate(5);
-        return response([ 'apartments' => ApartmentResource::collection($apartments), 'message' => 'Retrieved successfully'], 200);  
-
+        return ApartmentResource::collection(Apartment::orderBy('id', 'ASC')->paginate(10));
     }
-
-    /* Show the form for creating a new apartment.
-    public function create()
-    {
-        return view('apartment.create');
-    }
-    */
-
-    //Store a newly created apartment in storage.
+    
+    //Store a newly created apartment in the DB.
     public function store(Request $request)
     {
         $rules = array(
@@ -38,19 +29,15 @@ class ApartmentController extends Controller
         if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
+        
         $data = $request->all();
         $apartment = Apartment::create($data);
-        return response(['apartment' => new ApartmentResource($apartment), 'message' => 'Created successfully'], 201);
+        return response([
+            'apartment' => new ApartmentResource($apartment),
+            'message' => 'Created successfully'
+        ], 201);
         
     }
-
-    /* Show the form for editing the apartment.
-    public function edit($ext_id)
-    {
-        $apartment = Apartment::findOrFail($ext_id);        
-        return view('apartment.edit',compact('apartment'));
-    }
-    */
 
     //Update Apartment
     public function update(Request $request, Apartment $apartment)
@@ -68,15 +55,16 @@ class ApartmentController extends Controller
         }
 
         $apartment->update($request->all());
-        return response(['apartment' => new ApartmentResource($apartment), 'message' => 'Updated successfully'], 200);
+        return response([
+            'apartment' => new ApartmentResource($apartment),
+            'message' => 'Updated successfully'
+        ], 200);
        
     }
 
-
+    //Get Apartment
     public function show(Apartment $apartment)
     {
-        //$apartment = Apartment::findOrFail($ext_id);
-        //dd($apartment);
         return response([
             'apartment' => new ApartmentResource($apartment), 
             'message' => 'Retrieved successfully'
@@ -87,10 +75,7 @@ class ApartmentController extends Controller
     //Delete Apartment
     public function destroy(Apartment $apartment)
     {
-        //dd($apartment);
-        //$apartment = Apartment::findOrFail($ext_id);
         $apartment->delete();
-
         return response(['message' => 'Deleted']);
      
     }

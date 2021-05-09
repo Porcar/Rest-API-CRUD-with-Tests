@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Apartment;
+use App\Models\ApartmentCategory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -15,5 +16,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         Apartment::factory()->count(50)->create();
+        ApartmentCategory::factory()->count(50)->create();
     }
 }

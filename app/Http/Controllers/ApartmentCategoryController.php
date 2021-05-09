@@ -3,67 +3,79 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApartmentCategory;
+use App\Http\Resources\ApartmentCategoryResource;
 use Illuminate\Http\Request;
+use Validator;
 
 class ApartmentCategoryController extends Controller
 {
     //Display a list of the categories
     public function index()
     {
-        $categories = ApartmentCategory::latest()->paginate(5);
-        
-        return view('category.index',compact('categories'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
-    }
-
-    // Show the form for creating a new category.
-    public function create()
-    {
-        return view('category.create');
+        return ApartmentCategoryResource::collection(ApartmentCategory::orderBy('ext_id', 'ASC')->paginate(10));
     }
 
     //Store a newly created category in storage.
     public function store(Request $request)
     {
-        $storeData = $request->validate([
-            'ext_id' => 'required|max:255',
-            'title' => 'required|max:255',
-            'description' => 'required|max:255',            
-        ]);
+        $rules = array(
+            'ext_id' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
 
-        $category = ApartmentCategory::create($storeData);
-         
-        return redirect('/category')->with('completed', 'A new category has been saved!');
-    }
-
-    // Show the form for editing the category.
-    public function edit($ext_id)
-    {
-        $category = ApartmentCategory::findOrFail($ext_id);        
-        return view('category.edit',compact('category'));
-    }
+        );
+        $validator = Validator::make($request->all(), $rules);
+     
+        if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+        
+        $data = $request->all();
+        $category = ApartmentCategory::create($data);
+        return response([
+            'category' => new ApartmentCategoryResource($category),
+            'message' => 'Created successfully'
+        ], 201);
+        
+    }    
 
     //Update category
-    public function update(Request $request, $ext_id)
+    public function update(Request $request, ApartmentCategory $category)
     {
-         //validation
-         $updateData = $request->validate([
-            'ext_id' => 'required|max:255',
-            'title' => 'required|max:255',
-            'description' => 'required|max:255',
-        ]);
+        $rules = array(
+            'ext_id' => 'string|max:255',
+            'title' => 'string|max:255',
+            'description' => 'string|max:255',
 
-        ApartmentCategory::where('ext_id',$ext_id)->update($updateData);
+        );
+        $validator = Validator::make($request->all(), $rules);
+     
+       if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
 
-        return redirect('/category')->with('success','Category updated successfully');
+        $category->update($request->all());
+        return response([
+            'category' => new ApartmentCategoryResource($category),
+            'message' => 'Updated successfully'
+        ], 200);
+       
     }
 
-    //Delete category
-    public function destroy($ext_id)
+    //Get Category
+    public function show(ApartmentCategory $category)
     {
-        $category = ApartmentCategory::findOrFail($ext_id);
+        return response([
+            'category' => new ApartmentCategoryResource($category), 
+            'message' => 'Retrieved successfully'
+        ], 200);
+    }
+    
+    //Delete category
+    public function destroy(ApartmentCategory $category)
+    {
         $category->delete();
-
-        return redirect('/category')->with('success', 'Category has been deleted');
+        return response(['message' => 'Deleted']);
+     
     }
 }

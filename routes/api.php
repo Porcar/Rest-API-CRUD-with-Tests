@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Apartment;
+use App\Models\ApartmentCategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,4 @@ use App\Models\Apartment;
 */
 
 Route::apiResource('apartment','App\Http\Controllers\ApartmentController');
-//Route::apiResource('apartment','App\Http\Controllers\ApartmentController');
+Route::apiResource('category','App\Http\Controllers\ApartmentCategoryController');

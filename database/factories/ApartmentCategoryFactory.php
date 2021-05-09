@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\ApartmentCategory;
+use App\Models\Apartment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ApartmentCategoryFactory extends Factory
@@ -21,8 +22,11 @@ class ApartmentCategoryFactory extends Factory
      */
     public function definition()
     {
+        //error con el unique
         return [
-            //
+            'ext_id' => Apartment::pluck('ext_id')->random(),
+            'title' => $this->faker->word(),
+            'description' => $this->faker->text($maxNbChars = 249),            
         ];
     }
 }

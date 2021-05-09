@@ -1,9 +1,7 @@
 <?php
 
 namespace Database\Factories;
-
 use App\Models\ApartmentCategory;
-use App\Models\Apartment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ApartmentCategoryFactory extends Factory
@@ -21,11 +19,11 @@ class ApartmentCategoryFactory extends Factory
      * @return array
      */
     public function definition()
-    {
-        //error con el unique
+    {   
+        //Change $max = 100 to the number of times you need to run the factory since AP-ID is unique.
         return [
-            'ext_id' => Apartment::pluck('ext_id')->random(),
-            'title' => $this->faker->word(),
+            'ext_id' => 'AP-'.$this->faker->unique()->numberBetween($min= 1, $max = 100),
+            'title' => $this->faker->randomElement(['Luxury', 'Estándar','Premium','Etc']),
             'description' => $this->faker->text($maxNbChars = 249),            
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ApartmentCategory;
+use App\Models\Apartment;
 use App\Http\Resources\ApartmentCategoryResource;
 use Illuminate\Http\Request;
 use Validator;
@@ -30,12 +31,22 @@ class ApartmentCategoryController extends Controller
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
         
-        $data = $request->all();
-        $category = ApartmentCategory::create($data);
-        return response([
-            'category' => new ApartmentCategoryResource($category),
-            'message' => 'Created successfully'
-        ], 201);
+        $data = $request->all();  
+        
+        //Validates if the EXT_ID exists in the Apartment Table.
+        $find_apartment = Apartment::where('ext_id', $request->ext_id)->first();
+        
+        if($find_apartment){
+            //Here we create the new Category if the ext_id in the apartment table exists.
+            $category = ApartmentCategory::create($data);
+            return response([
+                'category' => new ApartmentCategoryResource($category),
+                'message' => 'Created successfully'
+            ], 201);
+        }else{
+            return response(['error' => 'Validation Error, Invalid Apartment ID.']);
+        }
+        
         
     }    
 
@@ -53,13 +64,18 @@ class ApartmentCategoryController extends Controller
        if ($validator->fails()) {
             return response(['error' => $validator->errors(), 'Validation Error']);
         }
-
-        $category->update($request->all());
-        return response([
-            'category' => new ApartmentCategoryResource($category),
-            'message' => 'Updated successfully'
-        ], 200);
-       
+        //Validates if the EXT_ID exists in the Apartment Table.
+        $find_apartment = Apartment::where('ext_id', $request->ext_id)->first();
+        if($find_apartment){
+            //Here we update the Category if the ext_id in the apartment table exists.
+            $category->update($request->all());
+            return response([
+                'category' => new ApartmentCategoryResource($category),
+                'message' => 'Updated successfully'
+            ], 200);
+        }else{
+            return response(['error' => 'Validation Error, Invalid Apartment ID.']);
+        }
     }
 
     //Get Category
@@ -70,7 +86,7 @@ class ApartmentCategoryController extends Controller
             'message' => 'Retrieved successfully'
         ], 200);
     }
-    
+
     //Delete category
     public function destroy(ApartmentCategory $category)
     {

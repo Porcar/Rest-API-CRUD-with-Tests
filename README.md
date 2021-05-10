@@ -17,15 +17,15 @@
 
 - Clone the repository.
 - Go to the repository directory and do the following console commands:
-    > composer install
-    > php artisan key:generate
-    > cp .env.example .env
+    - composer install 
+    - php artisan key:generate
+    - cp .env.example .env
 - Edit .env file according to your database: DB_DATABASE=XXXX
 - create a Database with the same name used in the previous step.
 - create another Database named: "testing_DB"
 - php artisan migrate
 - If you want to create 100 dummy data do the following:
-    > php artisan db:seed 
+    - php artisan db:seed 
 - All the REST API calls are to: \apartment and \category
 - Have fun.
 

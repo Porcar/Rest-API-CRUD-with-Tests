@@ -29,13 +29,12 @@
 - All the REST API calls are to: \apartment and \category
 - Have fun.
 
+## Important changes:
+
+- Changed the DB names for dates to fit with laravel timestamps.
+- Changed de DB time from datetime to timestamp, because if we are serving customers in different countries with different application instances, by using TIMESTAMP, you’ll be able to serve the same date and time data in different timezones, directly from the database.
+
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-
-
-
-Important changes:
-
--Changed the DB names for dates to fith with laravel timestamps
--Change de DB time from datetime to timestamp, because if we are serving customers in different countries with different application instances, by using TIMESTAMP, you’ll be able to serve the same date and time data in different timezones, directly from the database.

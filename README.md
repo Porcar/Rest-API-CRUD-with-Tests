@@ -1,4 +1,4 @@
-#Laravel Rest API CRUD with tests.
+## Laravel Rest API CRUD with tests.
 
 ## Made with....PHP: 7.4 and Laravel 8.4
 
@@ -17,15 +17,15 @@
 
 - Clone the repository.
 - Go to the repository directory and do the following console commands:
-- $composer install
-- $php artisan key:generate
-- $cp .env.example .env
+    > composer install
+    > php artisan key:generate
+    > cp .env.example .env
 - Edit .env file according to your database: DB_DATABASE=XXXX
-- create a DB named: "XXXX"
-- create another DB named: "testing_DB"
+- create a Database with the same name used in the previous step.
+- create another Database named: "testing_DB"
 - php artisan migrate
-- //If you want to create 100 dummy data do the following:
-- php artisan db:seed 
+- If you want to create 100 dummy data do the following:
+    > php artisan db:seed 
 - All the REST API calls are to: \apartment and \category
 - Have fun.
 
@@ -44,11 +44,11 @@ We will be using Laravel's Sail
  - $git clone https://github.com/Porcar/Rest-API-CRUD-with-Tests.git
 - Then run the following Docker command:
 
-docker run --rm \
-    -v $(pwd):/opt \
-    -w /opt \
-    laravelsail/php80-composer:latest \
-    composer install
+    docker run --rm \
+        -v $(pwd):/opt \
+        -w /opt \
+        laravelsail/php80-composer:latest \
+        composer install
     
 - This command uses a small Docker container containing PHP and Composer to install the application’s dependencies. After that you can run the following command to copy the .env file, generate an application key, run the database migrations and all the others explained at the begining of the file.
 
